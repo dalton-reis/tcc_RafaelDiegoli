@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="NavigatorTag" size="0.300000 0.117188" />
+    <ImageTarget name="OptionsTag" size="0.300000 0.117188" />
+    <ImageTarget name="SceneTag" size="0.300000 0.300000" />
+  </Tracking>
+</QCARConfig>

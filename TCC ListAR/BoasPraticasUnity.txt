@@ -1,0 +1,11 @@
+Guia de boas práticas do Unity (Assets, gráficos, etc)
+
+https://unity3d.com/pt/learn/tutorials/s/best-practices
+
+https://docs.unity3d.com/Manual/BestPracticeGuides.html
+
+https://answers.unity.com/questions/1354956/what-are-the-best-practices-of-designing-code-arch.html
+---
+https://github.com/tecedufurb/Unity/blob/master/_BoaPraticas_2018-2.pdf
+http://www.glenstevens.ca/unity3d-best-practices/
+
