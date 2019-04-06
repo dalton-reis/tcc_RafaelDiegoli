@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +20,18 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
 
     public Color UnselectedColor;
     public Color SelectedColor;
+
+    ScrollRect scrollObj;
+    ScrollRect ScrollObj
+    {
+        get
+        {
+            if (scrollObj == null)
+                scrollObj = gameObject.GetComponentInChildren<ScrollRect>();
+
+            return scrollObj;
+        }
+    }
 
     public void RefreshList(ListAR listAR, bool createNewList)
     {
@@ -52,6 +63,11 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
 
             itemDescriptionList.Add(itemDescription);
         }
+
+        var selectedRectTransf = itemDescriptionList[listAR.CurrentIndex].GetComponent<RectTransform>();
+
+        float scrollValue = 1 + selectedRectTransf.anchoredPosition.y / ScrollObj.content.rect.height;
+        ScrollObj.verticalScrollbar.value = scrollValue;
 
         listARObject = listAR;
     }
