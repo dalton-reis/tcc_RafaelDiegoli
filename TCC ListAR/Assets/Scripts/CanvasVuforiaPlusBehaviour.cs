@@ -75,7 +75,7 @@ public class CanvasVuforiaPlusBehaviour : OpcaoVuforiaBehaviour, IVirtualButtonE
     {
         get
         {
-            if (currentObjectiveIndex > 0 && currentObjectiveIndex < OBJECTIVES.Length)
+            if (currentObjectiveIndex > -1 && currentObjectiveIndex < OBJECTIVES.Length)
                 return OBJECTIVES[currentObjectiveIndex];
 
             return OBJECTIVES.Last();
@@ -126,7 +126,7 @@ public class CanvasVuforiaPlusBehaviour : OpcaoVuforiaBehaviour, IVirtualButtonE
         var objectiveObj = GameObject.FindGameObjectWithTag(TAG_OBJECTIVE);
         if (objectiveObj != null)
             objectiveText = objectiveObj.GetComponent<Text>();
-        
+
         ChangeObjective();
 
         ListARObject.ItemsAdded += OnListARChanged;
