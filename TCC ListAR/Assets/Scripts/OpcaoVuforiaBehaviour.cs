@@ -89,31 +89,26 @@ public class OpcaoVuforiaBehaviour : MonoBehaviour
 
     public void OnNextItem()
     {
-        Debug.Log("OnNextItem");
         CollectionToIterate.NextItem();
     }
 
     public void OnPreviousItem()
     {
-        Debug.Log("OnPreviousItem");
         CollectionToIterate.PreviousItem();
     }
 
     public void OnBackToMenu()
     {
-        Debug.Log("OnBackToMenu");
         SceneManager.LoadScene(AppTeste.CENA_MENU_PRINCIPAL);
     }
 
     public void OnAddItems()
     {
-        Debug.Log("OnAddItems");
         ListARObject.AddItem(ItemFactory.GetListItems(ListARObject.DisplayObj.transform.localScale));
     }
 
     public void OnDeleteItem()
     {
-        Debug.Log("OnDeleteItem");
         ListARObject.RemoveItemAt(ListARObject.CurrentIndex);
 
         if (iterableType == IterableType.ListARItemMaterials)
@@ -122,7 +117,6 @@ public class OpcaoVuforiaBehaviour : MonoBehaviour
 
     public void OnSelectItem()
     {
-        Debug.Log("OnSelectItem");
         CanvasVuforiaPlusBehaviour.CheckSelectedItem();
     }
 }
