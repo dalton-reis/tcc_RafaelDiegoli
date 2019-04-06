@@ -20,7 +20,7 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
     public Color UnselectedColor;
     public Color SelectedColor;
 
-    public void RefreshList(ListAR listAR)
+    public void RefreshList(ListAR listAR, bool createNewList)
     {
         if (ListContent == null)
             return;
@@ -28,17 +28,20 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
         if (itemDescriptionList == null)
             itemDescriptionList = new List<GameObject>(listAR.Count);
 
-        for (int i = 0; i < itemDescriptionList.Count;)
+        if (createNewList)
         {
-            var obj = itemDescriptionList[i];
-            itemDescriptionList.RemoveAt(i);
-            Destroy(obj);
+            for (int i = 0; i < itemDescriptionList.Count;)
+            {
+                var obj = itemDescriptionList[i];
+                itemDescriptionList.RemoveAt(i);
+                Destroy(obj);
+            }
         }
 
         for (int i = 0; i < listAR.Count; i++)
         {
             ListARItem item = listAR[i];
-            var itemDescription = Instantiate(ItemDescriptionPrefab, ListContent.transform);
+            var itemDescription = createNewList ? Instantiate(ItemDescriptionPrefab, ListContent.transform) : itemDescriptionList[i];
 
             itemDescription.GetComponentInChildren<Text>().text = item.ToString();
             itemDescription.GetComponent<Image>().color = i == listAR.CurrentIndex ? SelectedColor : UnselectedColor;

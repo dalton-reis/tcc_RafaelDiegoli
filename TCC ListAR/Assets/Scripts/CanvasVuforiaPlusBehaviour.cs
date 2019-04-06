@@ -134,19 +134,19 @@ public class CanvasVuforiaPlusBehaviour : OpcaoVuforiaBehaviour, IVirtualButtonE
         ListARObject.CurrentItemChanged += OnListARItemChanged;
 
         if (ListBehaviour != null)
-            ListBehaviour.RefreshList(ListARObject);
+            ListBehaviour.RefreshList(ListARObject, true);
     }
 
     private void OnListARItemChanged(ListAR sender, ListARItemChangedEventArgs args)
     {
         if (ListBehaviour != null)
-            ListBehaviour.RefreshList(sender);
+            ListBehaviour.RefreshList(sender, false);
     }
 
     private void OnListARChanged(ListAR sender, ListAREventArgs args)
     {
         if (ListBehaviour != null)
-            ListBehaviour.RefreshList(sender);
+            ListBehaviour.RefreshList(sender, true);
     }
 
     void Update()
