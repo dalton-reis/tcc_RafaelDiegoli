@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
 	}
 
     List<GameObject> itemDescriptionList;
+    ListAR listARObject;
 
     public Color UnselectedColor;
     public Color SelectedColor;
@@ -41,6 +43,8 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
         for (int i = 0; i < listAR.Count; i++)
         {
             ListARItem item = listAR[i];
+            item.CurrentMaterialChanged += RefreshItemDescription;
+
             var itemDescription = createNewList ? Instantiate(ItemDescriptionPrefab, ListContent.transform) : itemDescriptionList[i];
 
             itemDescription.GetComponentInChildren<Text>().text = item.ToString();
@@ -48,5 +52,16 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
 
             itemDescriptionList.Add(itemDescription);
         }
+
+        listARObject = listAR;
+    }
+
+    private void RefreshItemDescription(ListARItem sender, ListARItemMaterialChangedEventArgs args)
+    {
+        int itemIndex = listARObject.IndexOf(sender);
+        if (itemIndex < 0 || itemIndex > listARObject.Count)
+            return;
+
+        itemDescriptionList[itemIndex].GetComponentInChildren<Text>().text = sender.ToString();
     }
 }

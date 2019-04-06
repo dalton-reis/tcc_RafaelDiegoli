@@ -170,8 +170,6 @@ public class CanvasVuforiaPlusBehaviour : OpcaoVuforiaBehaviour, IVirtualButtonE
         {
             CanvasVuforiaAction action = (CanvasVuforiaAction)Enum.Parse(typeof(CanvasVuforiaAction), vb.VirtualButtonName);
 
-            Debug.Log(action);
-
             switch (action)
             {
                 case CanvasVuforiaAction.Next:
