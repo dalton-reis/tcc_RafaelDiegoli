@@ -4016,7 +4016,7 @@ MonoBehaviour:
   m_Script: {fileID: -1826476478, guid: bab6fa851cf5a1a4bba3cec5f191cb8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mWorldCenterMode: 2
+  mWorldCenterMode: 1
   mWorldCenter: {fileID: 0}
 --- !u!81 &1046544044
 AudioListener:
@@ -5015,6 +5015,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActivatedSprite: {fileID: 21300000, guid: 18e2ff1d451834543904126f62d5eb65, type: 3}
+  Axis: 0
   AngleValue: 30
   VuforiaPlusCanvas: {fileID: 2123288034}
 --- !u!54 &1299414738
