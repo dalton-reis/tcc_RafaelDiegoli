@@ -6,20 +6,11 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
 {
     public GameObject ListContent;
     public GameObject ItemDescriptionPrefab;
-
-    void Start()
-    {
-	}
-	
-	void Update()
-    {
-	}
+    public Color UnselectedColor;
+    public Color SelectedColor;
 
     List<GameObject> itemDescriptionList;
     ListAR listARObject;
-
-    public Color UnselectedColor;
-    public Color SelectedColor;
 
     ScrollRect scrollObj;
     ScrollRect ScrollObj
@@ -32,6 +23,14 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
             return scrollObj;
         }
     }
+
+    void Start()
+    {
+	}
+	
+	void Update()
+    {
+	}
 
     public void RefreshList(ListAR listAR, bool createNewList)
     {
@@ -66,8 +65,11 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
 
         var selectedRectTransf = itemDescriptionList[listAR.CurrentIndex].GetComponent<RectTransform>();
 
-        float scrollValue = 1 + selectedRectTransf.anchoredPosition.y / ScrollObj.content.rect.height;
-        ScrollObj.verticalScrollbar.value = scrollValue;
+        if (ScrollObj != null)
+        {
+            float scrollValue = 1 + selectedRectTransf.anchoredPosition.y / ScrollObj.content.rect.height;
+            ScrollObj.verticalScrollbar.value = scrollValue;
+        }
 
         listARObject = listAR;
     }
