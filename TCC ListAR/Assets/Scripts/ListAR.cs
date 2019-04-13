@@ -27,6 +27,13 @@ public class ListARItemChangedEventArgs
 
 public class ListAR : MonoBehaviour, IList<ListARItem>, IIterableCollection
 {
+    GameObject itemDisplayObj;
+
+    public GameObject ItemDisplayObj
+    {
+        get { return itemDisplayObj; }
+    }
+
     public List<ListARItem> Items;
 
     public GameObject DisplayObj;
@@ -179,9 +186,8 @@ public class ListAR : MonoBehaviour, IList<ListARItem>, IIterableCollection
 
     void InternalShowHideItem(bool show)
     {
-        CurrentItem.ObjPrefab.transform.SetPositionAndRotation(DisplayObj.transform.position, DisplayObj.transform.rotation);
         CurrentItem.Visible = show;
-        DisplayObj = CurrentItem.ObjPrefab;
+        itemDisplayObj = CurrentItem.ObjPrefab;
     }
 
     public void NextMaterialForItem()
@@ -200,6 +206,7 @@ public class ListAR : MonoBehaviour, IList<ListARItem>, IIterableCollection
 
     void Update()
     {
+        CurrentItem.ObjPrefab.transform.SetPositionAndRotation(DisplayObj.transform.position, DisplayObj.transform.rotation);
     }
 
     public int IndexOf(ListARItem item)

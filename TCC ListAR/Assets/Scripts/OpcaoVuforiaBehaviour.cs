@@ -104,7 +104,7 @@ public class OpcaoVuforiaBehaviour : MonoBehaviour
 
     public void OnAddItems()
     {
-        ListARObject.AddItem(ItemFactory.GetListItems(ListARObject.DisplayObj.transform.localScale));
+        ListARObject.AddItem(ItemFactory.GetListItems(ListARObject.ItemDisplayObj.transform.localScale));
     }
 
     public void OnDeleteItem()
