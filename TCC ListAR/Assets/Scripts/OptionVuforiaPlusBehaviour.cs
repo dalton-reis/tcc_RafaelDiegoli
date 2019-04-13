@@ -1,30 +1,45 @@
 ﻿using UnityEngine;
 using Vuforia;
 
-public class OptionVuforiaPlusBehaviour : MonoBehaviour, IVirtualButtonEventHandler
+public enum VirtualButtonType
+{
+    Button,
+    CheckBox,
+}
+
+public class OptionVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButtonEventHandler
 {
     public Sprite PressedSprite;
     public GameObject VirtualButton;
+    public VirtualButtonType ButtonType
+    {
+        get { return VirtualButtonType.Button; }
+    }
 
-    Sprite standyBySprite;
+    protected Sprite standyBySprite;
 
-    void Start()
+    protected void InternalStart()
     {
         VirtualButton.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
         standyBySprite = GetComponent<SpriteRenderer>().sprite;
+    }
+
+    void Start()
+    {
+        InternalStart();
     }
 
     void Update()
     {
     }
 
-    public void OnButtonPressed(VirtualButtonBehaviour vb)
+    public virtual void OnButtonPressed(VirtualButtonBehaviour vb)
     {
-        GetComponent<SpriteRenderer>().sprite = PressedSprite;
+        gameObject.GetComponent<SpriteRenderer>().sprite = PressedSprite;
     }
 
-    public void OnButtonReleased(VirtualButtonBehaviour vb)
+    public virtual void OnButtonReleased(VirtualButtonBehaviour vb)
     {
-        GetComponent<SpriteRenderer>().sprite = standyBySprite;
+        gameObject.GetComponent<SpriteRenderer>().sprite = standyBySprite;
     }
 }

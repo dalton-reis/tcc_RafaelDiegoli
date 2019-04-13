@@ -15,6 +15,7 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
         AddItems,
         DeleteItem,
         SelectItem,
+        SetVisible,
     }
 
     public float holdOnTime = 1;
@@ -66,6 +67,15 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
         pressedTime.Add(vb.VirtualButtonName, Time.time);
     }
 
+    TEnum SafeParseEnum<TEnum>(string name)
+    {
+        foreach (string enumName in Enum.GetNames(typeof(TEnum)))
+            if (string.Compare(enumName, name, true) == 0)
+                return (TEnum)Enum.Parse(typeof(TEnum), name);
+
+        return default(TEnum);
+    }
+
     public void OnButtonReleased(VirtualButtonBehaviour vb)
     {
         float time;
@@ -73,7 +83,7 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 
         if ((Time.time - time) >= holdOnTime)
         {
-            CanvasVuforiaAction action = (CanvasVuforiaAction)Enum.Parse(typeof(CanvasVuforiaAction), vb.VirtualButtonName);
+            CanvasVuforiaAction action = SafeParseEnum<CanvasVuforiaAction>(vb.VirtualButtonName);
 
             switch (action)
             {
@@ -103,6 +113,22 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 
                 case CanvasVuforiaAction.SelectItem:
                     OnSelectItem();
+                    break;
+
+                case CanvasVuforiaAction.SetVisible:
+                    {
+                        if (vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>().ButtonType == VirtualButtonType.CheckBox)
+                        {
+                            var virtualCheckbox = vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
+                            virtualCheckbox.ChangeCheck();
+
+                            if (virtualCheckbox.IsChecked)
+                                ListARObject.ShowItem();
+                            else
+                                ListARObject.HideItem();
+                        }
+                        
+                    }
                     break;
             }
         }
