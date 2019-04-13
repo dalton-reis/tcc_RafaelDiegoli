@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Vuforia;
 
-public class CanvasVuforiaCubeBehaviour : MonoBehaviour
+public class CanvasVuforiaCubeBehaviour : MonoBehaviour, ITrackableEventHandler
 {
     public enum ReferenceAxis
     {
@@ -15,21 +16,28 @@ public class CanvasVuforiaCubeBehaviour : MonoBehaviour
     public CanvasVuforiaPlusBehaviour VuforiaPlusCanvas;
 
     float lastAngle;
-
     Sprite standyBySprite;
+    bool isActive, isColliding;
 
     void Start()
     {
         standyBySprite = GetComponentInChildren<SpriteRenderer>().sprite;
-	}
+        GetComponent<MultiTargetBehaviour>().RegisterTrackableEventHandler(this);
+    }
 	
 	void Update()
     {
 	}
 
+    void ChangeSprite()
+    {
+        GetComponentInChildren<SpriteRenderer>().sprite = isActive && isColliding ? ActivatedSprite : standyBySprite;
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        GetComponentInChildren<SpriteRenderer>().sprite = ActivatedSprite;
+        isColliding = true;
+        ChangeSprite();
     }
 
     float GetAxisAngle(Vector3 angles)
@@ -49,9 +57,10 @@ public class CanvasVuforiaCubeBehaviour : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        Vector3 angles = gameObject.transform.rotation.eulerAngles;
+        if (!(isActive && isColliding))
+            return;
 
-        //Debug.Log(string.Format("angle x: {0} y: {1} z: {2}", angles.x, angles.y, angles.z));
+        Vector3 angles = gameObject.transform.rotation.eulerAngles;
 
         float currentRotation = GetAxisAngle(angles);
 
@@ -74,6 +83,22 @@ public class CanvasVuforiaCubeBehaviour : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        GetComponentInChildren<SpriteRenderer>().sprite = standyBySprite;
+        isColliding = false;
+        ChangeSprite();
+    }
+
+    public void OnTrackableStateChanged(TrackableBehaviour.Status previousStatus, TrackableBehaviour.Status newStatus)
+    {
+        if (newStatus != TrackableBehaviour.Status.DETECTED && newStatus != TrackableBehaviour.Status.TRACKED)
+        {
+            isColliding = false;
+            isActive = false;
+        }
+        else
+        {
+            isActive = true;
+        }
+
+        ChangeSprite();
     }
 }

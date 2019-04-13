@@ -2,12 +2,21 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum HandOrientation
+{
+    RightHanded,
+    LeftHanded,
+}
+
 public class CanvasVuforiaListBehaviour : MonoBehaviour
 {
     public GameObject ListContent;
     public GameObject ItemDescriptionPrefab;
     public Color UnselectedColor;
     public Color SelectedColor;
+    public GameObject CubeSwitchRight;
+    public GameObject CubeSwitchLeft;
+    public HandOrientation Hand;
 
     List<GameObject> itemDescriptionList;
     ListAR listARObject;
@@ -26,7 +35,19 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
 
     void Start()
     {
-	}
+        switch (Hand)
+        {
+            case HandOrientation.RightHanded:
+                CubeSwitchRight.SetActive(true);
+                CubeSwitchLeft.SetActive(false);
+                break;
+
+            case HandOrientation.LeftHanded:
+                CubeSwitchLeft.SetActive(true);
+                CubeSwitchRight.SetActive(false);
+                break;
+        }
+    }
 	
 	void Update()
     {
