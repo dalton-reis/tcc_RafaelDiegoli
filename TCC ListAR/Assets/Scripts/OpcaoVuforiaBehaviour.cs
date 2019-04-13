@@ -117,6 +117,6 @@ public class OpcaoVuforiaBehaviour : MonoBehaviour
 
     public void OnSelectItem()
     {
-        CanvasVuforiaPlusBehaviour.CheckSelectedItem();
+        AppTeste.CheckSelectedItem();
     }
 }
