@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class OpcaoVuforiaBehaviour : MonoBehaviour
+public class OptionVuforiaBehaviour : MonoBehaviour
 {
     protected const string TAG_DESCRIPION_TEXT = "DescriptionText";
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Vuforia;
 
-public class CanvasVuforiaPlusBehaviour : OpcaoVuforiaBehaviour, IVirtualButtonEventHandler
+public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButtonEventHandler
 {
     public enum CanvasVuforiaAction
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Vuforia;
 
-public class OpcaoVuforiaPlusBehaviour : MonoBehaviour, IVirtualButtonEventHandler
+public class OptionVuforiaPlusBehaviour : MonoBehaviour, IVirtualButtonEventHandler
 {
     public Sprite PressedSprite;
     public GameObject VirtualButton;
