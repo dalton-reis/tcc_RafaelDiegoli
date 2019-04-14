@@ -16,12 +16,14 @@ public class OptionVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
         get { return VirtualButtonType.Button; }
     }
 
-    protected Sprite standyBySprite;
+    public Sprite StandyBySprite;
 
     protected void InternalStart()
     {
         VirtualButton.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
-        standyBySprite = GetComponent<SpriteRenderer>().sprite;
+
+        if (StandyBySprite == null)
+            StandyBySprite = GetComponent<SpriteRenderer>().sprite;
     }
 
     void Start()
@@ -40,6 +42,6 @@ public class OptionVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 
     public virtual void OnButtonReleased(VirtualButtonBehaviour vb)
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = standyBySprite;
+        gameObject.GetComponent<SpriteRenderer>().sprite = StandyBySprite;
     }
 }

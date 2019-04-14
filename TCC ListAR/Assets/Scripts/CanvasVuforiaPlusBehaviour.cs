@@ -18,7 +18,7 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
         SetVisible,
     }
 
-    public float holdOnTime = 1;
+    public float HoldOnTime = 1;
     public GameObject[] Buttons;
 
     Dictionary<string, float> pressedTime = new Dictionary<string, float>();
@@ -81,7 +81,7 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
         float time;
         pressedTime.TryGetValue(vb.VirtualButtonName, out time);
 
-        if ((Time.time - time) >= holdOnTime)
+        if ((Time.time - time) >= HoldOnTime)
         {
             CanvasVuforiaAction action = SafeParseEnum<CanvasVuforiaAction>(vb.VirtualButtonName);
 
