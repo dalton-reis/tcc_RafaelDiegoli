@@ -17,11 +17,26 @@ public enum VuforiaScrollType
     SliderBehaviour,
 }
 
+public class ScrollValueChangedEventArgs
+{
+    public int OldValue { get; set; }
+    public int NewValue { get; set; }
+
+    public ScrollValueChangedEventArgs()
+    {
+    }
+
+    public ScrollValueChangedEventArgs(int oldValue, int newValue)
+    {
+        OldValue = oldValue;
+        NewValue = newValue;
+    }
+}
+
 public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEventHandler
 {
     public GameObject Content;
     public GameObject VirtualStepPrefab;
-    public ListAR ListARObject;
 
     public Sprite UnselectedSprite;
     public Sprite SelectedSprite;
@@ -31,6 +46,15 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
     public int Steps;
     public float HoldOnTime = 1;
     public VuforiaScrollType BehaviourType;
+
+    public delegate void ScrollValueChangedEventHandler(OptionVuforiaPlusScrollBehaviour sender, ScrollValueChangedEventArgs args);
+    public event ScrollValueChangedEventHandler ValueChanged;
+
+    protected virtual void RaiseValueChanged(ScrollValueChangedEventArgs args)
+    {
+        if (ValueChanged != null)
+            ValueChanged(this, args);
+    }
 
     public int Value
     {
@@ -57,7 +81,6 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
 
     List<GameObject> virtualStepsList;
     Dictionary<string, float> pressedTime = new Dictionary<string, float>();
-    Vector3 originalScale;
 
     void Start()
     {
@@ -92,7 +115,6 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
             virtualStepsList.Add(virtualStep);
         }
 
-        originalScale = ListARObject.CurrentItem.ObjPrefab.transform.localScale;
         Value = 0;
 	}
 	
@@ -124,7 +146,6 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
                 }
 
                 SelectSteps(vb.gameObject.transform.parent.gameObject);
-                ListARObject.CurrentItem.ObjPrefab.transform.localScale = originalScale + new Vector3(Value, Value, Value);
             }
         }
     }
@@ -147,7 +168,20 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
 
     void InternalSelectSteps(params int[] buttons)
     {
+        int oldValue = -1;
+
         for (int i = 0; i < virtualStepsList.Count; i++)
-            virtualStepsList[i].GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>().IsChecked = buttons.Contains(i);
+        {
+            var checkBehaviour = virtualStepsList[i].GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
+
+            if (checkBehaviour.IsChecked && i != buttons.Max() && i > oldValue)
+                oldValue = i;
+
+            checkBehaviour.IsChecked = buttons.Contains(i);
+        }
+
+        int newValue = buttons.Max();
+        if (oldValue != newValue)
+            RaiseValueChanged(new ScrollValueChangedEventArgs(oldValue, newValue));
     }
 }

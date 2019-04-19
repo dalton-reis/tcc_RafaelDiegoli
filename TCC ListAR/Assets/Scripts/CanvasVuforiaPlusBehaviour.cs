@@ -20,12 +20,26 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 
     public float HoldOnTime = 1;
     public GameObject[] Buttons;
+    public GameObject SetScaleScroll;
 
     Dictionary<string, float> pressedTime = new Dictionary<string, float>();
+    Vector3 originalScale;
 
     CanvasVuforiaListBehaviour ListBehaviour
     {
         get { return gameObject.GetComponent<CanvasVuforiaListBehaviour>(); }
+    }
+
+    OptionVuforiaPlusScrollBehaviour scrollBehaviour;
+    OptionVuforiaPlusScrollBehaviour ScrollBehaviour
+    {
+        get
+        {
+            if (scrollBehaviour == null && SetScaleScroll != null)
+                scrollBehaviour = SetScaleScroll.GetComponentInChildren<OptionVuforiaPlusScrollBehaviour>();
+
+            return scrollBehaviour;
+        }
     }
 
     void Start()
@@ -41,6 +55,14 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 
         if (ListBehaviour != null)
             ListBehaviour.RefreshList(ListARObject, true);
+
+        if (ScrollBehaviour != null)
+            ScrollBehaviour.ValueChanged += OnScaleValueChanged;
+    }
+
+    private void OnScaleValueChanged(OptionVuforiaPlusScrollBehaviour sender, ScrollValueChangedEventArgs args)
+    {
+        ListARObject.CurrentItem.ObjPrefab.transform.localScale = originalScale + new Vector3(args.NewValue, args.NewValue, args.NewValue);
     }
 
     private void OnListARItemChanged(ListAR sender, ListARItemChangedEventArgs args)
@@ -53,6 +75,9 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
     {
         if (ListBehaviour != null)
             ListBehaviour.RefreshList(sender, true);
+
+        if (originalScale == Vector3.zero)
+            originalScale = ListARObject.CurrentItem.OriginalLocalScale;
     }
 
     void Update()

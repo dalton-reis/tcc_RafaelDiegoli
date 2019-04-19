@@ -7,6 +7,10 @@ public class ListARItemEventArgs
 {
     public Material[] Materials { get; set; }
 
+    public ListARItemEventArgs()
+    {
+    }
+
     public ListARItemEventArgs(Material[] materials)
     {
         Materials = materials;
@@ -17,6 +21,10 @@ public class ListARItemMaterialChangedEventArgs
 {
     public Material OldMaterial { get; set; }
     public Material NewMaterial { get; set; }
+
+    public ListARItemMaterialChangedEventArgs()
+    {
+    }
 
     public ListARItemMaterialChangedEventArgs(Material oldMaterial, Material newMaterial)
     {

@@ -7,6 +7,10 @@ public class ListAREventArgs
 {
     public ListARItem[] Items { get; set; }
 
+    public ListAREventArgs()
+    {
+    }
+
     public ListAREventArgs(ListARItem[] items)
     {
         Items = items;
@@ -17,6 +21,10 @@ public class ListARItemChangedEventArgs
 {
     public ListARItem OldItem { get; set; }
     public ListARItem NewItem { get; set; }
+
+    public ListARItemChangedEventArgs()
+    {
+    }
 
     public ListARItemChangedEventArgs(ListARItem oldItem, ListARItem newItem)
     {

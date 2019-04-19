@@ -23,8 +23,21 @@ public class OptionVuforiaPlusCheckBoxBehaviour : OptionVuforiaPlusBehaviour
 
     public string Text
     {
-        get { return InternalText.text; }
-        set { InternalText.text = value; }
+        get
+        {
+            if (InternalText == null)
+                return string.Empty;
+
+            return InternalText.text;
+        }
+
+        set
+        {
+            if (InternalText == null)
+                return;
+
+            InternalText.text = value;
+        }
     }
 
     SpriteRenderer iconSprite;
