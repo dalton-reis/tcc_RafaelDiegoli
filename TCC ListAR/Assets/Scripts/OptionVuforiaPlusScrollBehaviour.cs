@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
@@ -47,6 +48,11 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
     public float HoldOnTime = 1;
     public VuforiaScrollType BehaviourType;
 
+    public TextMesh MinText;
+    public TextMesh MaxText;
+    public string descriptionText;
+    public bool VerticalText;
+
     public delegate void ScrollValueChangedEventHandler(OptionVuforiaPlusScrollBehaviour sender, ScrollValueChangedEventArgs args);
     public event ScrollValueChangedEventHandler ValueChanged;
 
@@ -76,6 +82,56 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
             step.IsChecked = true;
 
             SelectSteps(virtualStepsList[value]);
+        }
+    }
+
+    public string DescriptionText
+    {
+        get
+        {
+            if (InternalText == null)
+                return string.Empty;
+
+            if (!VerticalText)
+                return InternalText.text;
+
+            return string.Join("", InternalText.text.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries));
+        }
+
+        set
+        {
+            if (InternalText == null)
+                return;
+
+            InternalText.text = VerticalText ? GetVerticalString(value) : value;
+        }
+    }
+
+    TextMesh internalText;
+    TextMesh InternalText
+    {
+        get
+        {
+            if (internalText == null)
+            {
+                var texts = gameObject.GetComponentsInChildren<TextMesh>();
+
+                for (int i = texts.Length - 1; i >= 0; i--)
+                {
+                    TextMesh textChild = texts[i];
+
+                    if (MinText != null && textChild.gameObject == MinText.gameObject)
+                        continue;
+
+                    if (MaxText != null && textChild.gameObject == MaxText.gameObject)
+                        continue;
+
+                    internalText = textChild.gameObject.GetComponentInChildren<TextMesh>();
+                    break;
+                }
+            }
+
+            return internalText;
         }
     }
 
@@ -116,7 +172,29 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
         }
 
         Value = 0;
-	}
+
+        if (MinText != null)
+            MinText.text = "0";
+
+        if (MaxText != null)
+            MaxText.text = virtualStepsList.Count.ToString();
+
+        if (InternalText != null)
+            InternalText.text = VerticalText ? GetVerticalString(descriptionText) : descriptionText;
+    }
+
+    string GetVerticalString(string srcText)
+    {
+        if (string.IsNullOrEmpty(srcText))
+            return string.Empty;
+
+        string temp = srcText.Replace("\r\n", "").Replace("\n", "");
+
+        if (string.IsNullOrEmpty(temp))
+            return string.Empty;
+
+        return string.Join("\n", temp.ToCharArray().Select(x => x.ToString()).ToArray());
+    }
 	
 	void Update()
     {
