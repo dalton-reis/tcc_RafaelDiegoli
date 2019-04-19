@@ -168,7 +168,7 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
 
     void InternalSelectSteps(params int[] buttons)
     {
-        int oldValue = -1;
+        int oldValue = 0;
 
         for (int i = 0; i < virtualStepsList.Count; i++)
         {
