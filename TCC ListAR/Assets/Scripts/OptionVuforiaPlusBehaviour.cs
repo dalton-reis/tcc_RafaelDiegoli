@@ -11,7 +11,7 @@ public class OptionVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 {
     public Sprite PressedSprite;
     public GameObject VirtualButton;
-    public VirtualButtonType ButtonType
+    public virtual VirtualButtonType ButtonType
     {
         get { return VirtualButtonType.Button; }
     }

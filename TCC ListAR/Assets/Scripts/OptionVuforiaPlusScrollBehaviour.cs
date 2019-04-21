@@ -174,10 +174,10 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
         Value = 0;
 
         if (MinText != null)
-            MinText.text = "0";
+            MinText.text = "1";
 
         if (MaxText != null)
-            MaxText.text = virtualStepsList.Count.ToString();
+            MaxText.text = (virtualStepsList.Count - 1).ToString();
 
         if (InternalText != null)
             InternalText.text = VerticalText ? GetVerticalString(descriptionText) : descriptionText;

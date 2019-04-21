@@ -1,6 +1,20 @@
 ﻿using System.Linq;
 using UnityEngine;
 
+public class CheckBoxCheckChangedEventArgs
+{
+    public bool IsChecked { get; set; }
+
+    public CheckBoxCheckChangedEventArgs()
+    {
+    }
+
+    public CheckBoxCheckChangedEventArgs(bool checkValue)
+    {
+        IsChecked = checkValue;
+    }
+}
+
 public class OptionVuforiaPlusCheckBoxBehaviour : OptionVuforiaPlusBehaviour
 {
     bool isChecked;
@@ -37,7 +51,17 @@ public class OptionVuforiaPlusCheckBoxBehaviour : OptionVuforiaPlusBehaviour
                 return;
 
             InternalText.text = value;
+            text = value;
         }
+    }
+
+    public delegate void CheckBoxCheckChangedEventHandler(OptionVuforiaPlusCheckBoxBehaviour sender, CheckBoxCheckChangedEventArgs args);
+    public event CheckBoxCheckChangedEventHandler CheckChanged;
+
+    protected virtual void RaiseCheckChanged(CheckBoxCheckChangedEventArgs args)
+    {
+        if (CheckChanged != null)
+            CheckChanged(this, args);
     }
 
     SpriteRenderer iconSprite;
@@ -59,10 +83,11 @@ public class OptionVuforiaPlusCheckBoxBehaviour : OptionVuforiaPlusBehaviour
         {
             isChecked = value;
             IconSprite.sprite = isChecked ? CheckedSprite : UncheckedSprite;
+            RaiseCheckChanged(new CheckBoxCheckChangedEventArgs(isChecked));
         }
     }
 
-    public new VirtualButtonType ButtonType
+    public override VirtualButtonType ButtonType
     {
         get { return VirtualButtonType.CheckBox; }
     }
@@ -73,10 +98,10 @@ public class OptionVuforiaPlusCheckBoxBehaviour : OptionVuforiaPlusBehaviour
         IsChecked = IconSprite.sprite == CheckedSprite;
         Text = text;
     }
-	
-	void Update()
+
+    void Update()
     {
-	}
+    }
 
     public void ChangeCheck()
     {
