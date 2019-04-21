@@ -53,6 +53,8 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
     public string descriptionText;
     public bool VerticalText;
 
+    public string[] Descriptions;
+
     public delegate void ScrollValueChangedEventHandler(OptionVuforiaPlusScrollBehaviour sender, ScrollValueChangedEventArgs args);
     public event ScrollValueChangedEventHandler ValueChanged;
 
@@ -66,11 +68,14 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
     {
         get
         {
-            for (int i = virtualStepsList.Count - 1; i >= 0; i--)
+            if (virtualStepsList != null)
             {
-                var stepVirtualCheck = virtualStepsList[i].GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
-                if (stepVirtualCheck.IsChecked)
-                    return i;
+                for (int i = virtualStepsList.Count - 1; i >= 0; i--)
+                {
+                    var stepVirtualCheck = virtualStepsList[i].GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
+                    if (stepVirtualCheck.IsChecked)
+                        return i;
+                }
             }
 
             return -1;
@@ -78,6 +83,9 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
 
         set
         {
+            if (virtualStepsList == null)
+                return;
+
             var step = virtualStepsList[value].GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
             step.IsChecked = true;
 
@@ -135,13 +143,23 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
         }
     }
 
-    List<GameObject> virtualStepsList;
+    public List<GameObject> virtualStepsList { get; private set; }
     Dictionary<string, float> pressedTime = new Dictionary<string, float>();
 
-    void Start()
+    public void RefreshSteps()
     {
-        virtualStepsList = new List<GameObject>(Steps);
-        
+        if (virtualStepsList == null)
+            virtualStepsList = new List<GameObject>(Steps);
+        else
+        {
+            for (int i = 0; i < virtualStepsList.Count;)
+            {
+                var objStep = virtualStepsList[i];
+                Destroy(objStep);
+                virtualStepsList.RemoveAt(i);
+            }
+        }
+
         Transform transform = Content.transform;
         float newScale = transform.localScale.y / Steps;
 
@@ -168,6 +186,9 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
             stepVirtualCheck.UncheckedSprite = UnselectedIcon;
             stepVirtualCheck.CheckedSprite = SelectedIcon;
 
+            if (Descriptions != null && Descriptions.Length > i)
+                stepVirtualCheck.Text = Descriptions[i];
+
             virtualStepsList.Add(virtualStep);
         }
 
@@ -181,6 +202,11 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
 
         if (InternalText != null)
             InternalText.text = VerticalText ? GetVerticalString(descriptionText) : descriptionText;
+    }
+
+    void Start()
+    {
+        RefreshSteps();
     }
 
     string GetVerticalString(string srcText)

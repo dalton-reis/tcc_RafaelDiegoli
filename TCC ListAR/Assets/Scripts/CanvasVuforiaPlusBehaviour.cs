@@ -109,6 +109,13 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
         if ((Time.time - time) >= HoldOnTime)
         {
             CanvasVuforiaAction action = SafeParseEnum<CanvasVuforiaAction>(vb.VirtualButtonName);
+            OptionVuforiaPlusCheckBoxBehaviour virtualCheckbox = null;
+
+            if (vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>().ButtonType == VirtualButtonType.CheckBox)
+            {
+                virtualCheckbox = vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
+                virtualCheckbox.ChangeCheck();
+            }
 
             switch (action)
             {
@@ -142,17 +149,13 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 
                 case CanvasVuforiaAction.SetVisible:
                     {
-                        if (vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>().ButtonType == VirtualButtonType.CheckBox)
+                        if (virtualCheckbox != null)
                         {
-                            var virtualCheckbox = vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
-                            virtualCheckbox.ChangeCheck();
-
                             if (virtualCheckbox.IsChecked)
                                 ListARObject.ShowItem();
                             else
                                 ListARObject.HideItem();
                         }
-                        
                     }
                     break;
             }
