@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class OptionVuforiaPlusComboBoxBehaviour : MonoBehaviour
 {
-    public string[] Options;
     public GameObject MainCheck;
     public GameObject OptionsScroll;
 
@@ -27,13 +26,11 @@ public class OptionVuforiaPlusComboBoxBehaviour : MonoBehaviour
 
     void Start()
     {
-        ScrollBehaviour.Steps = Options.Length;
-        ScrollBehaviour.Descriptions = Options;
         originalOptionsScale = OptionsScroll.transform.localScale;
 
         ScrollBehaviour.ValueChanged += OnOptionScrollValueChanged;
         SelectedIndex = 0;
-        CheckBehaviour.Text = Options.First();
+        CheckBehaviour.Text = ScrollBehaviour.Descriptions.First();
 
         CheckBehaviour.CheckChanged += OnMainCheckChanged;
         CheckBehaviour.IsChecked = false;
