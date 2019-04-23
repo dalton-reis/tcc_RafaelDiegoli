@@ -44,7 +44,7 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
     public Sprite UnselectedIcon;
     public Sprite SelectedIcon;
 
-    public int Steps;
+    public string[] Elements;
     public float HoldOnTime = 1;
     public VuforiaScrollType BehaviourType;
 
@@ -53,7 +53,7 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
     public string descriptionText;
     public bool VerticalText;
 
-    public string[] Descriptions;
+    
 
     public delegate void ScrollValueChangedEventHandler(OptionVuforiaPlusScrollBehaviour sender, ScrollValueChangedEventArgs args);
     public event ScrollValueChangedEventHandler ValueChanged;
@@ -149,7 +149,7 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
     public void RefreshSteps()
     {
         if (virtualStepsList == null)
-            virtualStepsList = new List<GameObject>(Steps);
+            virtualStepsList = new List<GameObject>(Elements.Length);
         else
         {
             for (int i = 0; i < virtualStepsList.Count;)
@@ -161,11 +161,11 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
         }
 
         Transform transform = Content.transform;
-        float newScale = transform.localScale.y / Steps;
+        float newScale = transform.localScale.y / Elements.Length;
 
-        for (int i = 0; i < Steps; i++)
+        for (int i = 0; i < Elements.Length; i++)
         {
-            var vbPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - newScale * (i * Steps));
+            var vbPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z - newScale * (i * Elements.Length));
 
             var virtualStep = Instantiate(VirtualStepPrefab, vbPosition, transform.rotation, transform);
             virtualStep.gameObject.name = string.Format("{0}Step{1}", gameObject.name, i);
@@ -185,9 +185,7 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
             stepVirtualCheck.PressedSprite = SelectedSprite;
             stepVirtualCheck.UncheckedSprite = UnselectedIcon;
             stepVirtualCheck.CheckedSprite = SelectedIcon;
-
-            if (Descriptions != null && Descriptions.Length > i)
-                stepVirtualCheck.Text = Descriptions[i];
+            stepVirtualCheck.Text = Elements[i];
 
             virtualStepsList.Add(virtualStep);
         }

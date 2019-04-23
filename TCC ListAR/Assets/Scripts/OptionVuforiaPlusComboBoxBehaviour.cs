@@ -26,14 +26,6 @@ public class OptionVuforiaPlusComboBoxBehaviour : MonoBehaviour
 
     void Start()
     {
-        originalOptionsScale = OptionsScroll.transform.localScale;
-
-        ScrollBehaviour.ValueChanged += OnOptionScrollValueChanged;
-        SelectedIndex = 0;
-        CheckBehaviour.Text = ScrollBehaviour.Descriptions.First();
-
-        CheckBehaviour.CheckChanged += OnMainCheckChanged;
-        CheckBehaviour.IsChecked = false;
     }
 
     private void OnMainCheckChanged(OptionVuforiaPlusCheckBoxBehaviour sender, CheckBoxCheckChangedEventArgs args)
@@ -48,7 +40,26 @@ public class OptionVuforiaPlusComboBoxBehaviour : MonoBehaviour
         CheckBehaviour.ChangeCheck();
     }
 
+    bool firstUpdate = true;
+
     void Update()
     {
+        if (firstUpdate)
+        {
+            firstUpdate = false;
+            InternalStart();
+        }
 	}
+
+    void InternalStart()
+    {
+        originalOptionsScale = OptionsScroll.transform.localScale;
+
+        ScrollBehaviour.ValueChanged += OnOptionScrollValueChanged;
+        SelectedIndex = 0;
+        CheckBehaviour.Text = ScrollBehaviour.Elements.First();
+
+        CheckBehaviour.CheckChanged += OnMainCheckChanged;
+        CheckBehaviour.IsChecked = false;
+    }
 }

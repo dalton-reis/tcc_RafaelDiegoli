@@ -589,17 +589,16 @@ MonoBehaviour:
   SelectedSprite: {fileID: 21300000, guid: 18e2ff1d451834543904126f62d5eb65, type: 3}
   UnselectedIcon: {fileID: 0}
   SelectedIcon: {fileID: 21300000, guid: aede6ae3dc7744767a6a5c14fec87326, type: 3}
-  Steps: 3
+  Elements:
+  - E1
+  - E2
+  - E3
   HoldOnTime: 0.4
   BehaviourType: 0
   MinText: {fileID: 0}
   MaxText: {fileID: 0}
   descriptionText: 
   VerticalText: 0
-  Descriptions:
-  - V1
-  - V2
-  - V3
 --- !u!114 &114876668976242466
 MonoBehaviour:
   m_ObjectHideFlags: 1
