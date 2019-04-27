@@ -197,7 +197,7 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
         Value = 0;
 
         if (MinText != null)
-            MinText.text = string.IsNullOrEmpty(MinTextString) ? "0" : MinTextString;
+            MinText.text = string.IsNullOrEmpty(MinTextString) ? "1" : MinTextString;
 
         if (MaxText != null)
             MaxText.text = string.IsNullOrEmpty(MaxTextString) ? virtualStepsList.Count.ToString() : MaxTextString;
