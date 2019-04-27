@@ -46,6 +46,23 @@ public class ListAR : MonoBehaviour, IList<ListARItem>, IIterableCollection
 
     public GameObject DisplayObj;
 
+    public IterableType IterationType = IterableType.ListARObjects;
+
+    public IIterableCollection CurrentIterableCollection
+    {
+        get
+        {
+            switch (IterationType)
+            {
+                case IterableType.ListARItemMaterials:
+                    return CurrentItem;
+
+                default:
+                    return this;
+            }
+        }
+    }
+
     int currentItemIndex = 0;
 
     public delegate void ListAREventHandler(ListAR sender, ListAREventArgs args);

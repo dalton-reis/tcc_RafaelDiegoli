@@ -1,4 +1,10 @@
-﻿public interface IIterableCollection
+﻿public enum IterableType
+{
+    ListARObjects,
+    ListARItemMaterials,
+}
+
+public interface IIterableCollection
 {
     void NextItem();
     void PreviousItem();

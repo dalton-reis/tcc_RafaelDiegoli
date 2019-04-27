@@ -111,7 +111,7 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
             CanvasVuforiaAction action = SafeParseEnum<CanvasVuforiaAction>(vb.VirtualButtonName);
             OptionVuforiaPlusCheckBoxBehaviour virtualCheckbox = null;
 
-            if (vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>().ButtonType == VirtualButtonType.CheckBox)
+            if (vb.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ButtonType == VirtualButtonType.CheckBox)
             {
                 virtualCheckbox = vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
                 virtualCheckbox.ChangeCheck();

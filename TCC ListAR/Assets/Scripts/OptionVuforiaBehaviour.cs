@@ -4,32 +4,8 @@ using UnityEngine.UI;
 
 public class OptionVuforiaBehaviour : MonoBehaviour
 {
-    protected const string TAG_DESCRIPION_TEXT = "DescriptionText";
-
-    public enum IterableType
-    {
-        ListARObjects,
-        ListARItemMaterials,
-    }
-
-    protected static ListAR ListARObject;
-    protected static IterableType iterableType = IterableType.ListARObjects;
-    protected static Text DescriptionText;
-
-    static IIterableCollection collectionToIterate;
-    protected static IIterableCollection CollectionToIterate
-    {
-        get
-        {
-            if (collectionToIterate == null)
-                collectionToIterate = ListARObject;
-
-            return collectionToIterate;
-        }
-
-        set { collectionToIterate = value; }
-    }
-
+    public ListAR ListARObject;
+    public Text DescriptionText;
 
     void Start()
     {
@@ -38,12 +14,6 @@ public class OptionVuforiaBehaviour : MonoBehaviour
 
     protected void InternalInitialize()
     {
-        ListARObject = GameObject.FindGameObjectWithTag(AppTeste.TAG_DISPLAY).GetComponent<ListAR>();
-
-        var descText = GameObject.FindGameObjectWithTag(TAG_DESCRIPION_TEXT);
-        if (descText != null)
-            DescriptionText = descText.GetComponent<Text>();
-
         SetCollectionToIterate();
     }
 
@@ -53,14 +23,14 @@ public class OptionVuforiaBehaviour : MonoBehaviour
 
     public void OnChangeIterableType()
     {
-        switch (iterableType)
+        switch (ListARObject.IterationType)
         {
             case IterableType.ListARObjects:
-                iterableType = IterableType.ListARItemMaterials;
+                ListARObject.IterationType = IterableType.ListARItemMaterials;
                 break;
 
             default:
-                iterableType = IterableType.ListARObjects;
+                ListARObject.IterationType = IterableType.ListARObjects;
                 break;
         }
 
@@ -69,17 +39,18 @@ public class OptionVuforiaBehaviour : MonoBehaviour
 
     void SetCollectionToIterate()
     {
-        switch (iterableType)
+        if (ListARObject == null)
+            return;
+
+        switch (ListARObject.IterationType)
         {
             case IterableType.ListARItemMaterials:
-                CollectionToIterate = ListARObject.CurrentItem;
 
                 if (DescriptionText != null)
                     DescriptionText.text = "Materiais";
                 break;
 
             default:
-                CollectionToIterate = ListARObject;
 
                 if (DescriptionText != null)
                     DescriptionText.text = "Objetos";
@@ -89,12 +60,12 @@ public class OptionVuforiaBehaviour : MonoBehaviour
 
     public void OnNextItem()
     {
-        CollectionToIterate.NextItem();
+        ListARObject.CurrentIterableCollection.NextItem();
     }
 
     public void OnPreviousItem()
     {
-        CollectionToIterate.PreviousItem();
+        ListARObject.CurrentIterableCollection.PreviousItem();
     }
 
     public void OnBackToMenu()
@@ -111,8 +82,8 @@ public class OptionVuforiaBehaviour : MonoBehaviour
     {
         ListARObject.RemoveItemAt(ListARObject.CurrentIndex);
 
-        if (iterableType == IterableType.ListARItemMaterials)
-            CollectionToIterate = ListARObject.CurrentItem;
+        //if (ListARObject.IterationType == IterableType.ListARItemMaterials)
+        //    CollectionToIterate = ListARObject.CurrentItem;
     }
 
     public void OnSelectItem()
