@@ -42,12 +42,102 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
         }
     }
 
+    void ApplyCanvasVuforiaAction(CanvasVuforiaAction action, GameObject virtualObj)
+    {
+        switch (action)
+        {
+            case CanvasVuforiaAction.Next:
+                virtualObj.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ExecuteAction += OnNextItem;
+                break;
+
+            case CanvasVuforiaAction.Previous:
+                virtualObj.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ExecuteAction += OnPreviousItem;
+                break;
+
+            case CanvasVuforiaAction.ChangeType:
+                virtualObj.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ExecuteAction += OnChangeType;
+                break;
+
+            case CanvasVuforiaAction.BackToMenu:
+                virtualObj.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ExecuteAction += OnBackToMenu;
+                break;
+
+            case CanvasVuforiaAction.AddItems:
+                virtualObj.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ExecuteAction += OnAddItems;
+                break;
+
+            case CanvasVuforiaAction.DeleteItem:
+                virtualObj.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ExecuteAction += OnDeleteItem;
+                break;
+
+            case CanvasVuforiaAction.SelectItem:
+                virtualObj.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ExecuteAction += OnSelectItem;
+                break;
+
+            case CanvasVuforiaAction.SetVisible:
+                virtualObj.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>().CheckChanged += OnSetVisible;
+                break;
+
+            //If action is CanvasVuforiaAction.Nothing probably its a custom action not a ListAR action
+            default:
+                break;
+        }
+    }
+
+    protected virtual void OnNextItem(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
+    {
+        OnNextItem();
+    }
+
+    protected virtual void OnPreviousItem(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
+    {
+        OnPreviousItem();
+    }
+
+    protected virtual void OnChangeType(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
+    {
+        OnChangeIterableType();
+    }
+
+    protected virtual void OnBackToMenu(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
+    {
+        OnBackToMenu();
+    }
+
+    protected virtual void OnAddItems(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
+    {
+        OnAddItems();
+    }
+
+    protected virtual void OnDeleteItem(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
+    {
+        OnDeleteItem();
+    }
+
+    protected virtual void OnSelectItem(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
+    {
+        OnSelectItem();
+    }
+
+    protected virtual void OnSetVisible(OptionVuforiaPlusCheckBoxBehaviour sender, CheckBoxCheckChangedEventArgs args)
+    {
+        if (args.IsChecked)
+            ListARObject.ShowItem();
+        else
+            ListARObject.HideItem();
+    }
+
     void Start()
     {
         InternalInitialize();
 
         foreach (var button in Buttons)
-            button.GetComponent<VirtualButtonBehaviour>().RegisterEventHandler(this);
+        {
+            var vbBehaviour = button.GetComponent<VirtualButtonBehaviour>();
+            vbBehaviour.RegisterEventHandler(this);
+
+            ApplyCanvasVuforiaAction(SafeParseEnum<CanvasVuforiaAction>(vbBehaviour.VirtualButtonName), button);
+        }
 
         ListARObject.ItemsAdded += OnListARChanged;
         ListARObject.ItemsRemoved += OnListARChanged;
@@ -108,55 +198,19 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 
         if ((Time.time - time) >= HoldOnTime)
         {
-            CanvasVuforiaAction action = SafeParseEnum<CanvasVuforiaAction>(vb.VirtualButtonName);
-            OptionVuforiaPlusCheckBoxBehaviour virtualCheckbox = null;
+            var vPlusBehaviour = vb.GetComponentInChildren<OptionVuforiaPlusBehaviour>();
 
-            if (vb.GetComponentInChildren<OptionVuforiaPlusBehaviour>().ButtonType == VirtualButtonType.CheckBox)
+            switch (vPlusBehaviour.ButtonType)
             {
-                virtualCheckbox = vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
-                virtualCheckbox.ChangeCheck();
-            }
-
-            switch (action)
-            {
-                case CanvasVuforiaAction.Next:
-                    OnNextItem();
-                    break;
-
-                case CanvasVuforiaAction.Previous:
-                    OnPreviousItem();
-                    break;
-
-                case CanvasVuforiaAction.ChangeType:
-                    OnChangeIterableType();
-                    break;
-
-                case CanvasVuforiaAction.BackToMenu:
-                    OnBackToMenu();
-                    break;
-
-                case CanvasVuforiaAction.AddItems:
-                    OnAddItems();
-                    break;
-
-                case CanvasVuforiaAction.DeleteItem:
-                    OnDeleteItem();
-                    break;
-
-                case CanvasVuforiaAction.SelectItem:
-                    OnSelectItem();
-                    break;
-
-                case CanvasVuforiaAction.SetVisible:
+                case VirtualButtonType.CheckBox:
                     {
-                        if (virtualCheckbox != null)
-                        {
-                            if (virtualCheckbox.IsChecked)
-                                ListARObject.ShowItem();
-                            else
-                                ListARObject.HideItem();
-                        }
+                        var virtualCheckbox = vb.GetComponentInChildren<OptionVuforiaPlusCheckBoxBehaviour>();
+                        virtualCheckbox.ChangeCheck();
                     }
+                    break;
+
+                default:
+                    vPlusBehaviour.RaiseExecuteAction(new OptionVuforiaPlusActionEventArgs(vb.VirtualButtonName));
                     break;
             }
         }

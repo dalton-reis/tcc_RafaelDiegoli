@@ -22,23 +22,7 @@ public class OptionVuforiaBehaviour : MonoBehaviour
     {
     }
 
-    public void OnChangeIterableType()
-    {
-        switch (ListARObject.IterationType)
-        {
-            case IterableType.ListARObjects:
-                ListARObject.IterationType = IterableType.ListARItemMaterials;
-                break;
-
-            default:
-                ListARObject.IterationType = IterableType.ListARObjects;
-                break;
-        }
-
-        SetCollectionToIterate();
-    }
-
-    void SetCollectionToIterate()
+    protected virtual void SetCollectionToIterate()
     {
         if (ListARObject == null)
             return;
@@ -59,32 +43,48 @@ public class OptionVuforiaBehaviour : MonoBehaviour
         }
     }
 
-    public void OnNextItem()
+    public virtual void OnChangeIterableType()
+    {
+        switch (ListARObject.IterationType)
+        {
+            case IterableType.ListARObjects:
+                ListARObject.IterationType = IterableType.ListARItemMaterials;
+                break;
+
+            default:
+                ListARObject.IterationType = IterableType.ListARObjects;
+                break;
+        }
+
+        SetCollectionToIterate();
+    }
+
+    public virtual void OnNextItem()
     {
         ListARObject.CurrentIterableCollection.NextItem();
     }
 
-    public void OnPreviousItem()
+    public virtual void OnPreviousItem()
     {
         ListARObject.CurrentIterableCollection.PreviousItem();
     }
 
-    public void OnBackToMenu()
+    public virtual void OnBackToMenu()
     {
         SceneManager.LoadScene(MainMenuName);
     }
 
-    public void OnAddItems()
+    public virtual void OnAddItems()
     {
         ListARObject.AddItem(ItemFactory.GetListItems(ListARObject.ItemDisplayObj.transform.localScale));
     }
 
-    public void OnDeleteItem()
+    public virtual void OnDeleteItem()
     {
         ListARObject.RemoveItemAt(ListARObject.CurrentIndex);
     }
 
-    public void OnSelectItem()
+    public virtual void OnSelectItem()
     {
         AppTeste.CheckSelectedItem();
     }

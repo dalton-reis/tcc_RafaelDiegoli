@@ -7,6 +7,21 @@ public enum VirtualButtonType
     CheckBox,
 }
 
+public class OptionVuforiaPlusActionEventArgs
+{
+    public string VuforiaVBName { get; set; }
+
+    public OptionVuforiaPlusActionEventArgs()
+    {
+        VuforiaVBName = string.Empty;
+    }
+
+    public OptionVuforiaPlusActionEventArgs(string vbName)
+    {
+        VuforiaVBName = vbName;
+    }
+}
+
 public class OptionVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButtonEventHandler
 {
     public Sprite PressedSprite;
@@ -17,6 +32,9 @@ public class OptionVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
     }
 
     public Sprite StandyBySprite;
+
+    public delegate void OptionVuforiaPlusActionEventHandler(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args);
+    public event OptionVuforiaPlusActionEventHandler ExecuteAction;
 
     protected void InternalStart()
     {
@@ -33,6 +51,12 @@ public class OptionVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
 
     void Update()
     {
+    }
+
+    public virtual void RaiseExecuteAction(OptionVuforiaPlusActionEventArgs args)
+    {
+        if (ExecuteAction != null)
+            ExecuteAction(this, args);
     }
 
     public virtual void OnButtonPressed(VirtualButtonBehaviour vb)
