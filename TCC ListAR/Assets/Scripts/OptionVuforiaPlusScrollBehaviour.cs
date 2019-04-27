@@ -49,7 +49,11 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
     public VuforiaScrollType BehaviourType;
 
     public TextMesh MinText;
+    public string MinTextString;
+
     public TextMesh MaxText;
+    public string MaxTextString;
+
     public string descriptionText;
     public bool VerticalText;
 
@@ -193,10 +197,10 @@ public class OptionVuforiaPlusScrollBehaviour : MonoBehaviour, IVirtualButtonEve
         Value = 0;
 
         if (MinText != null)
-            MinText.text = "1";
+            MinText.text = string.IsNullOrEmpty(MinTextString) ? "0" : MinTextString;
 
         if (MaxText != null)
-            MaxText.text = (virtualStepsList.Count - 1).ToString();
+            MaxText.text = string.IsNullOrEmpty(MaxTextString) ? virtualStepsList.Count.ToString() : MaxTextString;
 
         if (InternalText != null)
             InternalText.text = VerticalText ? GetVerticalString(descriptionText) : descriptionText;
