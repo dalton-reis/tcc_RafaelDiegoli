@@ -24,6 +24,11 @@ public class OptionVuforiaPlusComboBoxBehaviour : MonoBehaviour
         set { ScrollBehaviour.Value = value; }
     }
 
+    public string SelectedValue
+    {
+        get { return CheckBehaviour.Text; }
+    }
+
     void Start()
     {
     }
