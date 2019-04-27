@@ -139,10 +139,13 @@ public class CanvasVuforiaPlusBehaviour : OptionVuforiaBehaviour, IVirtualButton
             ApplyCanvasVuforiaAction(SafeParseEnum<CanvasVuforiaAction>(vbBehaviour.VirtualButtonName), button);
         }
 
-        ListARObject.ItemsAdded += OnListARChanged;
-        ListARObject.ItemsRemoved += OnListARChanged;
-        ListARObject.CurrentItemChanged += OnListARItemChanged;
-
+        if (ListARObject != null)
+        {
+            ListARObject.ItemsAdded += OnListARChanged;
+            ListARObject.ItemsRemoved += OnListARChanged;
+            ListARObject.CurrentItemChanged += OnListARItemChanged;
+        }
+        
         if (ListBehaviour != null)
             ListBehaviour.RefreshList(ListARObject, true);
 

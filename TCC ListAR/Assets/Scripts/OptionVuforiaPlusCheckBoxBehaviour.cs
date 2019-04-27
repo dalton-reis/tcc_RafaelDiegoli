@@ -81,9 +81,13 @@ public class OptionVuforiaPlusCheckBoxBehaviour : OptionVuforiaPlusBehaviour
         get { return isChecked; }
         set
         {
-            isChecked = value;
-            IconSprite.sprite = isChecked ? CheckedSprite : UncheckedSprite;
-            RaiseCheckChanged(new CheckBoxCheckChangedEventArgs(isChecked));
+            IconSprite.sprite = value ? CheckedSprite : UncheckedSprite;
+
+            if (isChecked != value)
+            {
+                isChecked = value;
+                RaiseCheckChanged(new CheckBoxCheckChangedEventArgs(isChecked));
+            }
         }
     }
 
