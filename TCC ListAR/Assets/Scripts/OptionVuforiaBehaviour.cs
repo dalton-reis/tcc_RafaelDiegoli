@@ -6,6 +6,7 @@ public class OptionVuforiaBehaviour : MonoBehaviour
 {
     public ListAR ListARObject;
     public Text DescriptionText;
+    public string MainMenuName;
 
     void Start()
     {
@@ -70,7 +71,7 @@ public class OptionVuforiaBehaviour : MonoBehaviour
 
     public void OnBackToMenu()
     {
-        SceneManager.LoadScene(AppTeste.CENA_MENU_PRINCIPAL);
+        SceneManager.LoadScene(MainMenuName);
     }
 
     public void OnAddItems()
@@ -81,9 +82,6 @@ public class OptionVuforiaBehaviour : MonoBehaviour
     public void OnDeleteItem()
     {
         ListARObject.RemoveItemAt(ListARObject.CurrentIndex);
-
-        //if (ListARObject.IterationType == IterableType.ListARItemMaterials)
-        //    CollectionToIterate = ListARObject.CurrentItem;
     }
 
     public void OnSelectItem()

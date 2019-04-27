@@ -8,10 +8,10 @@ public class AppTeste : MonoBehaviour
     const string CENA_TRADICIONAL = "Tradicional";
     const string CENA_VUFORIA = "Vuforia AR";
     const string CENA_VUFORIA_PLUS = CENA_VUFORIA + " Plus";
+    const string CENA_MENU_PRINCIPAL = "Menu Principal";
 
-    public const string CENA_MENU_PRINCIPAL = "Menu Principal";
-    public const string TAG_DISPLAY = "Display";
-    public const string TAG_OBJECTIVE = "ObjectiveText";
+    const string TAG_DISPLAY = "Display";
+    const string TAG_OBJECTIVE = "ObjectiveText";
 
     public struct Objective
     {

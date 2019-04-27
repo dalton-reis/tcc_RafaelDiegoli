@@ -322,6 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 382354869}
   DescriptionText: {fileID: 0}
+  MainMenuName: 
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 0}
   DescriptionText: {fileID: 0}
+  MainMenuName: Menu Principal
 --- !u!1 &282840810
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 382354869}
   DescriptionText: {fileID: 0}
+  MainMenuName: 
 --- !u!114 &738029041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1076,6 +1079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 382354869}
   DescriptionText: {fileID: 0}
+  MainMenuName: 
 --- !u!1 &1309524102
 GameObject:
   m_ObjectHideFlags: 0
@@ -1126,6 +1130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 382354869}
   DescriptionText: {fileID: 0}
+  MainMenuName: 
 --- !u!114 &1309524105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,6 +1328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 382354869}
   DescriptionText: {fileID: 145619068}
+  MainMenuName: 
 --- !u!114 &2115737790
 MonoBehaviour:
   m_ObjectHideFlags: 0

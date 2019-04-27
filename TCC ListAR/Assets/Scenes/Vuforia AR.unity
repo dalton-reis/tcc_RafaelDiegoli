@@ -261,8 +261,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 1590252406}
-  iterableType: 0
   DescriptionText: {fileID: 0}
+  MainMenuName: 
 --- !u!114 &588364253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,8 +471,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 1590252406}
-  iterableType: 0
   DescriptionText: {fileID: 0}
+  MainMenuName: 
 --- !u!114 &1136861717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -898,8 +898,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 1590252406}
-  iterableType: 0
   DescriptionText: {fileID: 1083868309}
+  MainMenuName: 
 --- !u!114 &1368236524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,6 +1041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DisplayObj: {fileID: 1590252403}
+  IterationType: 0
 --- !u!65 &1590252407
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1206,8 +1207,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 0}
-  iterableType: 0
   DescriptionText: {fileID: 0}
+  MainMenuName: Menu Principal
 --- !u!114 &1750768424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1407,8 +1408,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 1590252406}
-  iterableType: 0
   DescriptionText: {fileID: 0}
+  MainMenuName: 
 --- !u!114 &1952230229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1643,8 +1644,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ListARObject: {fileID: 1590252406}
-  iterableType: 0
   DescriptionText: {fileID: 0}
+  MainMenuName: 
 --- !u!114 &2138836334
 MonoBehaviour:
   m_ObjectHideFlags: 0
