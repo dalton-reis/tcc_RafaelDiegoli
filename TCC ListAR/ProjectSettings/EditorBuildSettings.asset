@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Vuforia AR Plus.unity
     guid: 852df0c2558a13740934f55db3cf8c6b
+  - enabled: 1
+    path: Assets/Scenes/TestUserMainMenu.unity
+    guid: 349d2c45c08544042ac05da5055c5263
+  - enabled: 1
+    path: Assets/Scenes/TestUserActivity1.unity
+    guid: a24c6e0877463f646bfc9bfd4303e221
+  - enabled: 1
+    path: Assets/Scenes/TestUserActivity2.unity
+    guid: 384616901cada8645800821d62d9b8c7
   m_configObjects: {}

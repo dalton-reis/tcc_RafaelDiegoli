@@ -19,6 +19,12 @@ public class AppTeste : MonoBehaviour
         public string color { get; set; }
         public string objectName { get; set; }
         public int count { get; set; }
+        public int optionNumber { get; set; }
+
+        public bool checkOptionNumber
+        {
+            get { return optionNumber > -1; }
+        }
 
         public bool checkCount
         {
@@ -41,6 +47,16 @@ public class AppTeste : MonoBehaviour
             color = colorName;
             objectName = objName;
             count = itemCount;
+            optionNumber = -1;
+        }
+
+        public Objective(string desc, string colorName, string objName, int itemCount, int correctOption)
+        {
+            descripton = desc;
+            color = colorName;
+            objectName = objName;
+            count = itemCount;
+            optionNumber = correctOption;
         }
     }
 
