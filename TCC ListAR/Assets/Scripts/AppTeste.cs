@@ -41,6 +41,15 @@ public class AppTeste : MonoBehaviour
             get { return !string.IsNullOrEmpty(objectName); }
         }
 
+        public Objective(string desc)
+        {
+            descripton = desc;
+            color = null;
+            objectName = null;
+            count = 0;
+            optionNumber = 0;
+        }
+
         public Objective(string desc, string colorName, string objName, int itemCount)
         {
             descripton = desc;

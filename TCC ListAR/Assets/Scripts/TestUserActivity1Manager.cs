@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TestUserActivity1Manager : MonoBehaviour
 {
-    static readonly AppTeste.Objective[] OBJECTIVES = new AppTeste.Objective[]
+    readonly AppTeste.Objective[] OBJECTIVES = new AppTeste.Objective[]
     {
         new AppTeste.Objective("Selecione a opção que melhor representa o processo de precipitação", null, null, 0, 4),
         new AppTeste.Objective("Selecione a opção que melhor representa o processo de transpiração", null, null, 0, 2),
@@ -14,9 +14,9 @@ public class TestUserActivity1Manager : MonoBehaviour
         new AppTeste.Objective("Selecione a opção que melhor representa o processo de evaporação", null, null, 0, 1),
     };
 
-    static int currentObjectiveIndex = -1;
+    int currentObjectiveIndex = -1;
 
-    static AppTeste.Objective CurrentObjective
+    AppTeste.Objective CurrentObjective
     {
         get
         {
@@ -29,7 +29,7 @@ public class TestUserActivity1Manager : MonoBehaviour
 
     public Text ObjectiveText;
     public OptionVuforiaPlusBehaviour VuforiaConfirmButton;
-    public OptionVuforiaPlusComboBoxBehaviour VuforiaOptionsCombo;
+    public OptionVuforiaPlusScrollBehaviour VuforiaOptionsScroll;
 
     void ChangeObjective()
     {
@@ -55,30 +55,37 @@ public class TestUserActivity1Manager : MonoBehaviour
 
     void ApplySceneType()
     {
+        VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
+
         if (TestConfigurations.IsVuforiaPlus)
         {
             //TODO: desabilitar opções do canvas
-            VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
         }
         else
         {
-            VuforiaConfirmButton.transform.parent.parent.gameObject.SetActive(false);
+            //VuforiaConfirmButton.transform.parent.parent.gameObject.SetActive(false);
         }
-
+        
         ChangeObjective();
     }
 
     private void OnVuforiaConfirm(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
     {
-        CheckSelectedOption(Convert.ToInt32(VuforiaOptionsCombo.SelectedValue));
+        CheckSelectedOption(Convert.ToInt32(VuforiaOptionsScroll.Value + 1));
     }
 
     void Start()
     {
-        ApplySceneType();
 	}
-	
+
+    bool firstUpdate = true; 
+
 	void Update()
     {
-	}
+        if (firstUpdate)
+        {
+            ApplySceneType();
+            firstUpdate = false;
+        }
+    }
 }

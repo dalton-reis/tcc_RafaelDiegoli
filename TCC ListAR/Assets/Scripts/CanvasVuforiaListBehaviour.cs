@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +19,35 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
     public GameObject CubeSwitchLeft;
     public HandOrientation Hand;
 
+    public HandOrientation HandRuntime
+    {
+        set
+        {
+            Hand = value;
+
+            ApplyHandOrientation();
+        }
+    }
+
+    private void ApplyHandOrientation()
+    {
+        if (CubeSwitchLeft == null || CubeSwitchRight == null)
+            return;
+
+        switch (Hand)
+        {
+            case HandOrientation.RightHanded:
+                CubeSwitchRight.SetActive(true);
+                CubeSwitchLeft.SetActive(false);
+                break;
+
+            case HandOrientation.LeftHanded:
+                CubeSwitchLeft.SetActive(true);
+                CubeSwitchRight.SetActive(false);
+                break;
+        }
+    }
+
     List<GameObject> itemDescriptionList;
     ListAR listARObject;
 
@@ -35,18 +65,7 @@ public class CanvasVuforiaListBehaviour : MonoBehaviour
 
     void Start()
     {
-        switch (Hand)
-        {
-            case HandOrientation.RightHanded:
-                CubeSwitchRight.SetActive(true);
-                CubeSwitchLeft.SetActive(false);
-                break;
-
-            case HandOrientation.LeftHanded:
-                CubeSwitchLeft.SetActive(true);
-                CubeSwitchRight.SetActive(false);
-                break;
-        }
+        ApplyHandOrientation();
     }
 	
 	void Update()

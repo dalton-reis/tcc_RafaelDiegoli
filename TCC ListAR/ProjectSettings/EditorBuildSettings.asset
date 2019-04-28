@@ -5,16 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Menu Principal.unity
     guid: 477667b2a99e338498acbc1e724a2d4d
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Tradicional.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Vuforia AR.unity
     guid: 4ef055a8dc773224790282dd96db935f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Vuforia AR Plus.unity
     guid: 852df0c2558a13740934f55db3cf8c6b
   - enabled: 1

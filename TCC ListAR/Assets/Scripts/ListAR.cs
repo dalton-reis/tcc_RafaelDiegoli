@@ -231,7 +231,8 @@ public class ListAR : MonoBehaviour, IList<ListARItem>, IIterableCollection
 
     void Update()
     {
-        CurrentItem.ObjPrefab.transform.SetPositionAndRotation(DisplayObj.transform.position, DisplayObj.transform.rotation);
+        if (CurrentIndex > -1 && CurrentIndex < Count)
+            CurrentItem.ObjPrefab.transform.SetPositionAndRotation(DisplayObj.transform.position, DisplayObj.transform.rotation);
     }
 
     public int IndexOf(ListARItem item)
