@@ -21,6 +21,6 @@ public class OpcaoMenuPrincipalBehaviour : MonoBehaviour
     public void OnLoadScene()
     {
         if (!string.IsNullOrEmpty(sceneToLoad))
-            SceneManager.LoadScene(sceneToLoad);
+            SceneManager.LoadSceneAsync(sceneToLoad);
     }
 }
