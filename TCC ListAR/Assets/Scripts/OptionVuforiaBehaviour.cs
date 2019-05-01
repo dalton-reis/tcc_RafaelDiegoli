@@ -71,7 +71,7 @@ public class OptionVuforiaBehaviour : MonoBehaviour
 
     public virtual void OnBackToMenu()
     {
-        SceneManager.LoadScene(MainMenuName);
+        SceneManager.LoadSceneAsync(MainMenuName);
     }
 
     public virtual void OnAddItems()

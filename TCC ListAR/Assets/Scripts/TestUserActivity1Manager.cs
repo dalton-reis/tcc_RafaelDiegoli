@@ -41,7 +41,7 @@ public class TestUserActivity1Manager : MonoBehaviour
         ObjectiveText.text = CurrentObjective.descripton;
 
         if (currentObjectiveIndex >= OBJECTIVES.Length)
-            SceneManager.LoadScene(TestUserConfigManager.TEST_2_SCENE);
+            SceneManager.LoadSceneAsync(TestUserConfigManager.TEST_2_SCENE);
     }
 
     public void CheckSelectedOption(int selectedOption)
@@ -86,6 +86,26 @@ public class TestUserActivity1Manager : MonoBehaviour
         {
             ApplySceneType();
             firstUpdate = false;
+        }
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        if (arg0.name == TestUserConfigManager.TEST_1_SCENE)
+        {
+            //For some reason the Virtual Scroll/Slider and ComboBox only work on the the scene where Vuforia is initialized
+            Vuforia.VuforiaRuntime.Instance.Deinit();
+            Vuforia.VuforiaRuntime.Instance.InitVuforia();
         }
     }
 }

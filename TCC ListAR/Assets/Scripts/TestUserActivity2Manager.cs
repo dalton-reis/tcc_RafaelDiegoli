@@ -91,26 +91,29 @@ public class TestUserActivity2Manager : MonoBehaviour
 
         ObjectiveText.text = CurrentObjective.descripton;
 
-        if (currentObjectiveIndex >= OBJECTIVES.Length)
-            SceneManager.LoadScene(TestUserConfigManager.MAIN_MENU_SCENE);
+        if (currentObjectiveIndex == OBJECTIVES.Length)
+            SceneManager.LoadSceneAsync(TestUserConfigManager.MAIN_MENU_SCENE);
 
-        List<ListARItem> itemsToAdd = new List<ListARItem>(3);
+        if (currentObjectiveIndex < OBJECTIVES.Length - 1)
+        {
+            List<ListARItem> itemsToAdd = new List<ListARItem>(3);
 
-        foreach (Sprite sprite in CacheWrongImgs.Values.Skip(currentObjectiveIndex * 2).Take(2))
-            itemsToAdd.Add(CreateOptionItem(sprite));
+            foreach (Sprite sprite in CacheWrongImgs.Values.Skip(currentObjectiveIndex * 2).Take(2))
+                itemsToAdd.Add(CreateOptionItem(sprite));
 
-        var correctOption = CreateOptionItem(CacheCorrectImgs[string.Format("correta ({0})", currentObjectiveIndex + 1)]);
+            var correctOption = CreateOptionItem(CacheCorrectImgs[string.Format("correta ({0})", currentObjectiveIndex + 1)]);
 
-        itemsToAdd.Insert(Random.Range(0, 3), correctOption);
+            itemsToAdd.Insert(Random.Range(0, 3), correctOption);
 
-        ListARObject.AddItem(itemsToAdd);
+            ListARObject.AddItem(itemsToAdd);
 
-        correctImgIndex = ListARObject.IndexOf(correctOption);
+            correctImgIndex = ListARObject.IndexOf(correctOption);
+        }
     }
 
     public void CheckSelectedOption(int selectedOption)
     {
-        if (selectedOption == correctImgIndex)
+        if (selectedOption == correctImgIndex || currentObjectiveIndex == OBJECTIVES.Length - 1)
         {
             ListARObject.RemoveAt(correctImgIndex);
             ChangeObjective();
@@ -119,10 +122,11 @@ public class TestUserActivity2Manager : MonoBehaviour
 
     void ApplySceneType()
     {
+        VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
+
         if (TestConfigurations.IsVuforiaPlus)
         {
             VuforiaListObject.HandRuntime = TestConfigurations.Hand;
-            VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
         }
         else
         {
