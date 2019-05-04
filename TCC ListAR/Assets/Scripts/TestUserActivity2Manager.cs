@@ -125,8 +125,6 @@ public class TestUserActivity2Manager : MonoBehaviour
 
     void ApplySceneType()
     {
-        
-
         if (TestConfigurations.IsVuforiaPlus)
         {
             VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
@@ -141,6 +139,13 @@ public class TestUserActivity2Manager : MonoBehaviour
             PreviousButton.onClick.AddListener(ListARObject.PreviousItem);
             ConfirmButton.onClick.AddListener(() => CheckSelectedOption(ListARObject.CurrentIndex));
             VuforiaListObject.gameObject.SetActive(false);
+        }
+
+        if (TestConfigurations.IsLeftHanded)
+        {
+            TestConfigurations.SetLeftHandedAnchor(NextButton.gameObject.GetComponent<RectTransform>());
+            TestConfigurations.SetLeftHandedAnchor(PreviousButton.gameObject.GetComponent<RectTransform>());
+            TestConfigurations.SetLeftHandedAnchor(ConfirmButton.gameObject.GetComponent<RectTransform>());
         }
 
         ChangeObjective();

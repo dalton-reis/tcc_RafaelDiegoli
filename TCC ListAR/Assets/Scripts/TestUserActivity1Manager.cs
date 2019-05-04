@@ -68,6 +68,12 @@ public class TestUserActivity1Manager : MonoBehaviour
             ConfirmButton.onClick.AddListener(() => CheckSelectedOption(Convert.ToInt32(OptionsComboBox.options[OptionsComboBox.value].text)));
             VuforiaConfirmButton.transform.parent.parent.gameObject.SetActive(false);
         }
+
+        if (TestConfigurations.IsLeftHanded)
+        {
+            TestConfigurations.SetLeftHandedAnchor(OptionsComboBox.gameObject.GetComponent<RectTransform>());
+            TestConfigurations.SetLeftHandedAnchor(ConfirmButton.gameObject.GetComponent<RectTransform>());
+        }
         
         ChangeObjective();
     }

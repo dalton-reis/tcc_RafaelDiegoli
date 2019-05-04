@@ -14,6 +14,14 @@ public static class TestConfigurations
     public static HandOrientation Hand { get; set; }
 
     public static bool IsVuforiaPlus { get { return SceneType == TestSceneType.VuforiaPlus; } }
+    public static bool IsLeftHanded { get { return Hand == HandOrientation.LeftHanded; } }
+
+    public static void SetLeftHandedAnchor(RectTransform rect)
+    {
+        rect.anchorMin = new Vector2(0, rect.anchorMin.y);
+        rect.anchorMax = new Vector2(0, rect.anchorMax.y);
+        rect.anchoredPosition = new Vector2(Math.Abs(rect.anchoredPosition.x), rect.anchoredPosition.y);
+    }
 }
 
 public class TestUserConfigManager : MonoBehaviour
