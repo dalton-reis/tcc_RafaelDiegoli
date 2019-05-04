@@ -30,6 +30,8 @@ public class TestUserActivity1Manager : MonoBehaviour
     public Text ObjectiveText;
     public OptionVuforiaPlusBehaviour VuforiaConfirmButton;
     public OptionVuforiaPlusScrollBehaviour VuforiaOptionsScroll;
+    public Dropdown OptionsComboBox;
+    public Button ConfirmButton;
 
     void ChangeObjective()
     {
@@ -44,7 +46,7 @@ public class TestUserActivity1Manager : MonoBehaviour
             SceneManager.LoadSceneAsync(TestUserConfigManager.TEST_2_SCENE);
     }
 
-    public void CheckSelectedOption(int selectedOption)
+    void CheckSelectedOption(int selectedOption)
     {
         if (CurrentObjective.checkOptionNumber)
         {
@@ -55,15 +57,16 @@ public class TestUserActivity1Manager : MonoBehaviour
 
     void ApplySceneType()
     {
-        VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
-
         if (TestConfigurations.IsVuforiaPlus)
         {
-            //TODO: desabilitar opções do canvas
+            VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
+            OptionsComboBox.gameObject.SetActive(false);
+            ConfirmButton.gameObject.SetActive(false);
         }
         else
         {
-            //VuforiaConfirmButton.transform.parent.parent.gameObject.SetActive(false);
+            ConfirmButton.onClick.AddListener(() => CheckSelectedOption(Convert.ToInt32(OptionsComboBox.options[OptionsComboBox.value].text)));
+            VuforiaConfirmButton.transform.parent.parent.gameObject.SetActive(false);
         }
         
         ChangeObjective();

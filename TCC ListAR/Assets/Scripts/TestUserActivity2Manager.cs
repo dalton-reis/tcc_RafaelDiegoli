@@ -71,7 +71,10 @@ public class TestUserActivity2Manager : MonoBehaviour
     public GameObject ListAROptionPrefab;
     public CanvasVuforiaListBehaviour VuforiaListObject;
     public OptionVuforiaPlusBehaviour VuforiaConfirmButton;
-    
+    public Button NextButton;
+    public Button PreviousButton;
+    public Button ConfirmButton;
+
     ListARItem CreateOptionItem(Sprite sprite)
     {
         var obj = Instantiate(ListAROptionPrefab, ListARObject.DisplayObj.transform);
@@ -122,15 +125,22 @@ public class TestUserActivity2Manager : MonoBehaviour
 
     void ApplySceneType()
     {
-        VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
+        
 
         if (TestConfigurations.IsVuforiaPlus)
         {
+            VuforiaConfirmButton.ExecuteAction += OnVuforiaConfirm;
             VuforiaListObject.HandRuntime = TestConfigurations.Hand;
+            NextButton.gameObject.SetActive(false);
+            PreviousButton.gameObject.SetActive(false);
+            ConfirmButton.gameObject.SetActive(false);
         }
         else
         {
-            //VuforiaListObject.gameObject.SetActive(false);
+            NextButton.onClick.AddListener(ListARObject.NextItem);
+            PreviousButton.onClick.AddListener(ListARObject.PreviousItem);
+            ConfirmButton.onClick.AddListener(() => CheckSelectedOption(ListARObject.CurrentIndex));
+            VuforiaListObject.gameObject.SetActive(false);
         }
 
         ChangeObjective();
