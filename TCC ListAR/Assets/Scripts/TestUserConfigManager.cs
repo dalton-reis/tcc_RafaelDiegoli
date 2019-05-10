@@ -64,13 +64,10 @@ public class TestUserConfigManager : MonoBehaviour
 
     private void OnSceneTypeChanged(OptionVuforiaPlusCheckBoxBehaviour sender, CheckBoxCheckChangedEventArgs args)
     {
-        if (!args.IsChecked)
-            return;
-
         if (sender == TraditionalSceneCheckBox)
-            TestConfigurations.SceneType = TestSceneType.TraditionalVuforia;
+            TestConfigurations.SceneType = args.IsChecked ? TestSceneType.TraditionalVuforia : TestSceneType.VuforiaPlus;
         else
-            TestConfigurations.SceneType = TestSceneType.VuforiaPlus;
+            TestConfigurations.SceneType = args.IsChecked ? TestSceneType.VuforiaPlus : TestSceneType.TraditionalVuforia;
 
         RefreshSceneCheckBoxes();
     }
