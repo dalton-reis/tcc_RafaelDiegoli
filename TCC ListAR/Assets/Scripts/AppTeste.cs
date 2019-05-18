@@ -104,7 +104,7 @@ public class AppTeste : MonoBehaviour
         objectiveText.text = CurrentObjective.descripton;
     }
 
-    public static void CheckSelectedItem()
+    static void CheckSelectedItem(OptionVuforiaPlusBehaviour sender, OptionVuforiaPlusActionEventArgs args)
     {
         string[] palavrasDescItem = listAR.CurrentItem.ToString().Split(' ');
 
@@ -125,6 +125,7 @@ public class AppTeste : MonoBehaviour
 
     GameObject displayGameObj;
     static ListAR listAR;
+    static OptionVuforiaPlusBehaviour VuforiaSelectButton;
 
     float GetAjusteEscala(string cena)
     {
@@ -149,6 +150,13 @@ public class AppTeste : MonoBehaviour
         displayGameObj.transform.localScale = Vector3.zero;
 
         listAR = displayGameObj.GetComponent<ListAR>();
+
+        var confirmObj = GameObject.FindGameObjectWithTag("Player");
+        if (confirmObj != null)
+        {
+            VuforiaSelectButton = confirmObj.GetComponentInChildren<OptionVuforiaPlusBehaviour>();
+            VuforiaSelectButton.ExecuteAction += CheckSelectedItem;
+        }
 
         listAR.AddItem(ItemFactory.GetListItems(scale));
         listAR.ShowItem();

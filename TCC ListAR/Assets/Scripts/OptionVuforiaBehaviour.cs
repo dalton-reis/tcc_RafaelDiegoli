@@ -86,6 +86,5 @@ public class OptionVuforiaBehaviour : MonoBehaviour
 
     public virtual void OnSelectItem()
     {
-        AppTeste.CheckSelectedItem();
     }
 }
